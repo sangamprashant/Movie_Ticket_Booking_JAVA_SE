@@ -1,6 +1,6 @@
 import java.sql.*;
 import java.sql.DriverManager;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author Prasnat Srivastav
@@ -250,6 +250,9 @@ public class movie extends javax.swing.JFrame {
         
             
          }
+      else {
+    JOptionPane.showMessageDialog(this, "Select a limit of 10 or less tickets.");
+}
              
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
