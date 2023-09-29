@@ -39,24 +39,25 @@ Connection conn=null;
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("NAME");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(135, 128, 110, 29);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 110, -1));
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("EMAIL ID");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(135, 184, 140, 29);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 140, -1));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("PASSWORD");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(135, 309, 150, 29);
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 150, -1));
 
         jTextField1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -64,40 +65,42 @@ Connection conn=null;
                 jTextField1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(343, 129, 190, 35);
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, 190, -1));
 
         jTextField2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(343, 185, 190, 30);
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, 200, 30));
 
         jTextField3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(343, 310, 190, 30);
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 200, 30));
 
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
         jButton1.setFont(new java.awt.Font("Algerian", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("SIGN UP");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(200, 380, 220, 40);
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 220, -1));
 
-        jLabel4.setFont(new java.awt.Font("Algerian", 1, 36)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Algerian", 1, 48)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("NEW REGISTER");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(160, 30, 300, 48);
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 860, -1));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("PHONE NUMBER");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(135, 250, 200, 29);
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, -1, -1));
 
         jTextField4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(340, 240, 200, 30);
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 200, 30));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/d1.jpg"))); // NOI18N
+        jLabel6.setOpaque(true);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -175,6 +178,7 @@ Connection conn=null;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
