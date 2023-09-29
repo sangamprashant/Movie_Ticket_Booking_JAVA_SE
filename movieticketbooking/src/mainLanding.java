@@ -18,28 +18,8 @@ public class mainLanding extends javax.swing.JFrame {
     /**
      * Creates new form mainLanding
      */
-    private BufferedImage backgroundImage;
     public mainLanding() {
         initComponents();
-           loadBackgroundImage();
-    }
-   private void loadBackgroundImage() {
-        try {
-            
-            backgroundImage = ImageIO.read(new File("src/background.jpg"));
-System.out.println(backgroundImage);
-        } catch (IOException ex) {
-            // Handle image loading errors
-            ex.printStackTrace();
-        }
-    }
-    public void paintComponent(Graphics g) {
-        super.paintComponents(g);
-        
-        // Draw the background image
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,9 +33,12 @@ System.out.println(backgroundImage);
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("User");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -63,6 +46,7 @@ System.out.println(backgroundImage);
                 jButton1MouseClicked(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 169, 162, -1));
 
         jButton2.setText("Admin");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -70,38 +54,21 @@ System.out.println(backgroundImage);
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 232, 162, -1));
 
+        jLabel1.setFont(new java.awt.Font("Leelawadee UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Select The Account Type");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(209, 209, 209)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(217, 217, 217)
-                        .addComponent(jLabel1)))
-                .addGap(218, 218, 218))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addComponent(jLabel1)
-                .addGap(33, 33, 33)
-                .addComponent(jButton1)
-                .addGap(40, 40, 40)
-                .addComponent(jButton2)
-                .addContainerGap(69, Short.MAX_VALUE))
-        );
-
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 119, -1, -1));
         jLabel1.setFont(new java.awt.Font("Tahoma", java.awt.Font.PLAIN, 30));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("MULTIPLEX TICKET BOOKING");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(84, 50, -1, -1));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.jpg"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -260, 630, 740));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -132,5 +99,7 @@ System.out.println(backgroundImage);
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

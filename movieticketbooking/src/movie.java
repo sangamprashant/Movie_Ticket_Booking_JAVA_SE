@@ -7,11 +7,76 @@ import javax.swing.JOptionPane;
  */
 public class movie extends javax.swing.JFrame {
 
-    /**
-     * Creates new form movie
-     */
+     private Connection connection;
+    private Statement statement;
+    
     public movie() {
         initComponents();
+         initializeDatabase();
+        loadMovies();
+    }
+    
+    private void initializeDatabase() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/java_dbmovies", "root", "");
+            statement = connection.createStatement();
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error connecting to the database: " + e.getMessage());
+        }
+    }
+    private void loadMovies() {
+        MovieSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a movie" }));
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT movieName FROM table3");
+            while (resultSet.next()) {
+                String movieName = resultSet.getString("movieName");
+                MovieSelector.addItem(movieName);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading movies from the database: " + e.getMessage());
+        }
+    }
+
+    private void loadTheaters(String selectedMovie) {
+        TheatreSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a theatre" }));
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT DISTINCT theatre FROM table3 WHERE movieName = ?");
+            preparedStatement.setString(1, selectedMovie);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String theaterName = resultSet.getString("theatre");
+                TheatreSelector.addItem(theaterName);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading theaters: " + e.getMessage());
+        }
+    }
+
+    private void loadDates(String selectedMovie, String selectedTheater) {
+        DateSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a date" }));
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT date FROM table3 WHERE movieName = '" + selectedMovie + "' AND theatre = '" + selectedTheater + "'");
+            while (resultSet.next()) {
+                String showDate = resultSet.getString("date");
+                DateSelector.addItem(showDate);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading dates: " + e.getMessage());
+        }
+    }
+
+    private void loadTimes(String selectedMovie, String selectedTheater, String selectedDate) {
+       TimeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a show" }));
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT shows FROM table3 WHERE movieName = '" + selectedMovie + "' AND theatre = '" + selectedTheater + "' AND date = '" + selectedDate + "'");
+            while (resultSet.next()) {
+                String showTime = resultSet.getString("shows");
+                TimeSelector.addItem(showTime);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading times: " + e.getMessage());
+        }
     }
 
     /**
@@ -27,10 +92,10 @@ public class movie extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        MovieSelector = new javax.swing.JComboBox<>();
+        TheatreSelector = new javax.swing.JComboBox<>();
+        TimeSelector = new javax.swing.JComboBox<>();
+        DateSelector = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -48,20 +113,30 @@ public class movie extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel2.setText("SELECT  THEATRE:");
 
-        jComboBox1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Robo 2", "sahoo", "arvandi sametha" }));
-
-        jComboBox2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "srivishnu", "galaxy", "asscars", "PVR" }));
-
-        jComboBox3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00AM", "11:00AM", "2:00PM", "6:00PM", "9:00PM" }));
-
-        jComboBox4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "11-11-2018", "12-11-2018", "10-11-2018", "09-11-2018" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+        MovieSelector.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        MovieSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a movie" }));
+        MovieSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
+                MovieSelectorActionPerformed(evt);
+            }
+        });
+
+        TheatreSelector.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        TheatreSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a theatre" }));
+        TheatreSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TheatreSelectorActionPerformed(evt);
+            }
+        });
+
+        TimeSelector.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        TimeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a show " }));
+
+        DateSelector.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        DateSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a date" }));
+        DateSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DateSelectorActionPerformed(evt);
             }
         });
 
@@ -100,7 +175,7 @@ public class movie extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addGap(74, 74, 74)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(206, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -109,10 +184,10 @@ public class movie extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(MovieSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TheatreSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(DateSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TimeSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(60, 60, 60))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,28 +196,28 @@ public class movie extends javax.swing.JFrame {
                 .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(MovieSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(48, 48, 48)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(TheatreSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(DateSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(TimeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -159,7 +234,7 @@ public class movie extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(137, 137, 137)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,122 +248,86 @@ public class movie extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+
         workWithDatabase();
     }
      public void workWithDatabase()
     {
-         String a=(String) jComboBox1.getSelectedItem();
-       String b=(String) jComboBox2.getSelectedItem();
-        String e=(String) jComboBox3.getSelectedItem();
-        String f=(String) jComboBox4.getSelectedItem();
+         String selectedMovie = (String) MovieSelector.getSelectedItem();
+        String selectedTheater = (String) TheatreSelector.getSelectedItem();
+        String selectedDate = (String) DateSelector.getSelectedItem();
+        String selectedTime = (String) TimeSelector.getSelectedItem();
+        String ticketCountText = jTextField1.getText();
+        String a=(String) MovieSelector.getSelectedItem();
+       String b=(String) TheatreSelector.getSelectedItem();
+        String e=(String) TimeSelector.getSelectedItem();
+        String f=(String) DateSelector.getSelectedItem();
        String d=jTextField1.getText();
-       
-        
-         Connection c=null;
-         Statement  s=null;
-         
-         ResultSet rs=null;
-         int flag=0;
-     
-        //if(!a.equals(""))
-         String N=jTextField1.getText();
-        int N1=Integer.parseInt(N);
-        int N2=N1;
-         N1*=100;
-       //new recepit(a,b,e,d,N1,f).setVisible(true);
-        
-      if(N2<10 && N2>0)
-        
-         {  
-             this.setVisible(false);  new recepit(a,b,e,d,N1,f).setVisible(true); 
-       
-         try
-   {
-       Class.forName("com.mysql.jdbc.Driver");
-       c=DriverManager.getConnection("jdbc:mysql://localhost/java_dbmovies","root","");
-       s=c.createStatement();
-        b=(String) jComboBox2.getSelectedItem();
-       e=(String) jComboBox3.getSelectedItem();
-      String q1=b;
-       String q2=e;
-       rs=s.executeQuery("select tickets from table3 where theatre="+"'"+q1+"'"+" and shows="+"'"+q2+"'");
-      String bid=jTextField1.getText();
-      int id=Integer.parseInt(bid);
-      rs=s.executeQuery("select tickets from table3 where theatre="+"'"+q1+"'"+" and shows="+"'"+q2+"'");
-       while(rs.next())
-     {
-    String id1=rs.getString("tickets");
-     int id2=Integer.parseInt(id1);
-     
-     id2=id2-N2;
-     
-     s.executeUpdate("Update table3 set tickets="+id2+" where theatre="+"'"+q1+"'"+" and shows="+"'"+q2+"'");
-    }
-    //new recepit(a,b,e,d).setVisible(true);
-       while(rs.next())
-       {
-               String tickets1=rs.getString("tickets");
-               String q3 = tickets1;
-               
-               //jLabel5 = new javax.swing.JLabel("tickets available:"+"  "+q3);
-               
-         }
-              
-     
-      //rs.close;
-      //s.close;
-      //c.close;
-   }    
-         catch(SQLException | ClassNotFoundException e1)
-         {
-             System.out.println(e1);
-         }
-            
-         
-         
-        
-            
-         }
-      else {
-    JOptionPane.showMessageDialog(this, "Select a limit of 10 or less tickets.");
-}
+       String N=jTextField1.getText();
+        int N1=100*Integer.parseInt(N);
+
+        if (selectedMovie == null || selectedTheater == null || selectedDate == null || selectedTime == null || ticketCountText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select all options and enter the number of tickets.");
+            return;
+        }
+
+        try {
+            int ticketCount = Integer.parseInt(ticketCountText);
+
+            // Check ticket availability before booking
+            ResultSet resultSet = statement.executeQuery("SELECT tickets FROM table3 WHERE movieName = '" + selectedMovie + "' AND theatre = '" + selectedTheater + "' AND date = '" + selectedDate + "' AND shows = '" + selectedTime + "'");
+            if (resultSet.next()) {
+                int availableTickets = resultSet.getInt("tickets");
+                if (ticketCount <= availableTickets) {
+                    // Perform booking and update available tickets in the database
+                    int newAvailableTickets = availableTickets - ticketCount;
+                    statement.executeUpdate("UPDATE table3 SET tickets = " + newAvailableTickets + " WHERE movieName = '" + selectedMovie + "' AND theatre = '" + selectedTheater + "' AND date = '" + selectedDate + "' AND shows = '" + selectedTime + "'");
+                    JOptionPane.showMessageDialog(this, "Booking successful!");
+                    this.setVisible(false);  new recepit(a,b,e,d,N1,f).setVisible(true); 
+                } else {
+                    JOptionPane.showMessageDialog(this, "Not enough tickets available.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Tickets information not found.");
+            }
+        } catch (NumberFormatException | SQLException er) {
+            JOptionPane.showMessageDialog(this, "Error processing booking: " + er.getMessage());
+        }
+    
              
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+    private void DateSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateSelectorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
+             String selectedMovie = (String) MovieSelector.getSelectedItem();
+    String selectedTheater = (String) TheatreSelector.getSelectedItem();
+    String selectedDate = (String) DateSelector.getSelectedItem();
 
-    /**
-     * @param args the command line arguments
-     */
+    if (selectedMovie != null && selectedTheater != null && selectedDate != null) {
+        loadTimes(selectedMovie, selectedTheater, selectedDate);
+    }
+    }//GEN-LAST:event_DateSelectorActionPerformed
+
+    private void MovieSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MovieSelectorActionPerformed
+
+        String selectedMovie = (String) MovieSelector.getSelectedItem();
+    if (selectedMovie != null) {
+        loadTheaters(selectedMovie);
+    }
+    }//GEN-LAST:event_MovieSelectorActionPerformed
+
+    private void TheatreSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TheatreSelectorActionPerformed
+        // TODO add your handling code here:
+     String selectedMovie = (String) MovieSelector.getSelectedItem();
+    String selectedTheater = (String) TheatreSelector.getSelectedItem();
+
+    if (selectedMovie != null && selectedTheater != null) {
+        loadDates(selectedMovie, selectedTheater);
+    }
+    }//GEN-LAST:event_TheatreSelectorActionPerformed
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(movie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(movie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(movie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(movie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new movie().setVisible(true);
@@ -297,11 +336,11 @@ public class movie extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> DateSelector;
+    private javax.swing.JComboBox<String> MovieSelector;
+    private javax.swing.JComboBox<String> TheatreSelector;
+    private javax.swing.JComboBox<String> TimeSelector;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

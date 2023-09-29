@@ -16,6 +16,7 @@ Connection conn=null;
      */
     public register() {
         initComponents();
+         setSize(800, 600);
         conn=JavaApplication4.ConnecrDb();
     }
 
@@ -40,7 +41,6 @@ Connection conn=null;
         jTextField4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1080, 754));
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
@@ -107,66 +107,41 @@ Connection conn=null;
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String a=jTextField1.getText();
-       String b=jTextField2.getText();
-       String c=jTextField3.getText();
-    
-       /**Statement s;
-       ResultSet rs;
-       try
-       {
-           Class.forName("com.mysql.jdbc.Driver");
-          Connection conn =DriverManager.getConnection("jdbc:mysql://localhost/db","root","");
-          s=conn.createStatement();
-          //int i=0,y=0,e=0;
-         // s=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
-          //rs=executeQuery("select * from register");
-          //a=jTextField1.getText();
-          /**While (rs.next() && y==0)
-                 ; {
-                      String p=rs.getString("name");
-                      a=jTextField1.getText();
-                      System.out.println(p+""+a);
-                  }
-                  System.out.println(e);
-                  s.executeUpdate("insert into register values('"+a+"','"+b+"','"+c+"');");
-       }
-       catch(Exception e)
-       {
-           System.out.println(e);
-       }**/
-       if("".equals(a) && "".equals(b) && "".equals(c))
-       {
-           JOptionPane.showMessageDialog(this,"please enter valid details");
-       }
-       else {
-           
-       
-       try{
-          Statement s =conn.createStatement();
-          String s1=("insert into register values('"+a+"','"+b+"','"+c+"');");
-          System.out.println("success");
-          s.executeUpdate(s1);
-       }
-       catch(SQLException e)
-       {
-           Logger.getLogger(register.class.getName()).log(Level.SEVERE,null,e);
-       }
-       
-      this.setVisible(false);   new login().setVisible(true);
-          
+      String name = jTextField1.getText();
+        String email = jTextField2.getText();
+        String password = jTextField3.getText();
+        String phone = jTextField4.getText();
+
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter all details.");
+        } else {
+            try {
+                String query = "INSERT INTO register (name, email, password, phone) VALUES (?, ?, ?, ?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, email);
+                preparedStatement.setString(3, password);
+                preparedStatement.setString(4, phone);
+
+                int rowsInserted = preparedStatement.executeUpdate();
+                if (rowsInserted > 0) {
+                    JOptionPane.showMessageDialog(this, "Registration successful!");
+                    this.setVisible(false); // Close registration form.
+                    new login().setVisible(true); // Open login form.
+                } else {
+                    JOptionPane.showMessageDialog(this, "Registration failed.");
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            }
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-}
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
