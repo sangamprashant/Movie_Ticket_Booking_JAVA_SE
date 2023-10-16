@@ -273,6 +273,11 @@ public class movie extends javax.swing.JFrame {
 
         try {
             int ticketCount = Integer.parseInt(ticketCountText);
+            
+            if(ticketCount>10){
+                JOptionPane.showMessageDialog(this, "Ticket should not exceed above of 10.");
+                return;
+            }
 
             // Check ticket availability before booking
             ResultSet resultSet = statement.executeQuery("SELECT tickets FROM table3 WHERE movieName = '" + selectedMovie + "' AND theatre = '" + selectedTheater + "' AND date = '" + selectedDate + "' AND shows = '" + selectedTime + "'");
