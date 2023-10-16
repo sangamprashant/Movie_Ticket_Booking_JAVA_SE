@@ -87,62 +87,41 @@ public class login extends javax.swing.JFrame {
                  //s1=evt.getActionCommand();
          workWithDatabase();
     }
-    public void workWithDatabase()
-    {
-         Connection c=null;
-         Statement  s=null;
-         ResultSet rs=null;
-         int flag=0;
+    public void workWithDatabase() {
+    Connection c = null;
+    Statement s = null;
+    ResultSet rs = null;
     
-         //if(s1.equals("submit"))
-   {
-   try
-   {
-       Class.forName("com.mysql.jdbc.Driver");
-       c=DriverManager.getConnection("jdbc:mysql://localhost/java_dbmovies","root","");
-       s=c.createStatement();
-       String a=jTextField1.getText();
-       String b=jPasswordField1.getText();
-       rs=s.executeQuery("select name,password from register");
-       while(rs.next())
-       {       //flag=1;
-               String ename=rs.getString("name");
-               String pass=rs.getString("password");
-        if(a.equals(ename) && b.equals(pass))
-        {  
-           
-        JOptionPane.showMessageDialog(this,"Logined successfully");
-       this.setVisible(false);   new movie().setVisible(true);
-         //continue;
-         break;
-         }
-       /** else
-        {
-            // System.out.println("enter valid details");
-           //JOptionPane.showMessageDialog(null,"Invalid password or Username");
-            //break;
-         
-        }**/
-       
-       
-        else if("".equals(a) && "".equals(b))
-       {
-           JOptionPane.showMessageDialog(this,"please enter valid details");
-           break;
-           
-       }
-       }
-       /**if(flag==0)
-        {
-           setVisible(true);
-        }**/
-       }
-       
-   catch(Exception e)
-     {
-          System.out.println(e);
-      }
-   }
+    try {
+        Class.forName("com.mysql.jdbc.Driver");
+        c = DriverManager.getConnection("jdbc:mysql://localhost/java_dbmovies", "root", "");
+        s = c.createStatement();
+        String a = jTextField1.getText();
+        String b = jPasswordField1.getText();
+        rs = s.executeQuery("select name,password from register");
+        boolean loginSuccessful = false;
+
+        while (rs.next()) {
+            String ename = rs.getString("name");
+            String pass = rs.getString("password");
+
+            if (a.equals(ename) && b.equals(pass)) {
+                loginSuccessful = true;
+                break;
+            }
+        }
+
+        if (loginSuccessful) {
+            JOptionPane.showMessageDialog(this, "Login successful");
+            this.setVisible(false);
+            new movie().setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid username or password. Please try again.");
+        }
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+
        
    
     

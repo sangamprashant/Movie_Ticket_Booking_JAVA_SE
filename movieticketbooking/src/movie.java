@@ -266,10 +266,14 @@ public class movie extends javax.swing.JFrame {
        String N=jTextField1.getText();
         int N1=100*Integer.parseInt(N);
 
-        if (selectedMovie == null || selectedTheater == null || selectedDate == null || selectedTime == null || ticketCountText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please select all options and enter the number of tickets.");
-            return;
-        }
+        if (selectedMovie == null || "Select a movie".equals(selectedMovie) ||
+    selectedTheater == null || "Select a theatre".equals(selectedTheater) ||
+    selectedDate == null || "Select a date".equals(selectedDate) ||
+    selectedTime == null || "Select a show".equals(selectedTime) ||
+    ticketCountText.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Please select all options and enter the number of tickets.");
+    return;
+}
 
         try {
             int ticketCount = Integer.parseInt(ticketCountText);
@@ -285,9 +289,9 @@ public class movie extends javax.swing.JFrame {
                 int availableTickets = resultSet.getInt("tickets");
                 if (ticketCount <= availableTickets) {
                     // Perform booking and update available tickets in the database
-                    int newAvailableTickets = availableTickets - ticketCount;
-                    statement.executeUpdate("UPDATE table3 SET tickets = " + newAvailableTickets + " WHERE movieName = '" + selectedMovie + "' AND theatre = '" + selectedTheater + "' AND date = '" + selectedDate + "' AND shows = '" + selectedTime + "'");
-                    JOptionPane.showMessageDialog(this, "Booking successful!");
+//                    int newAvailableTickets = availableTickets - ticketCount;
+//                    statement.executeUpdate("UPDATE table3 SET tickets = " + newAvailableTickets + " WHERE movieName = '" + selectedMovie + "' AND theatre = '" + selectedTheater + "' AND date = '" + selectedDate + "' AND shows = '" + selectedTime + "'");
+//                    JOptionPane.showMessageDialog(this, "Booking successful!");
                     this.setVisible(false);  new recepit(a,b,e,d,N1,f).setVisible(true); 
                 } else {
                     JOptionPane.showMessageDialog(this, "Not enough tickets available.");
