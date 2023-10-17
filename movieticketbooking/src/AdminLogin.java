@@ -87,8 +87,8 @@ public class AdminLogin extends javax.swing.JFrame {
 }
 
         // Print the entered values (you can modify this part as needed)
-        System.out.println("Admin Name: " + adminName);
-        System.out.println("Admin Password: " + adminPassword);
+//        System.out.println("Admin Name: " + adminName);
+//        System.out.println("Admin Password: " + adminPassword);
     }// GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextField1ActionPerformed

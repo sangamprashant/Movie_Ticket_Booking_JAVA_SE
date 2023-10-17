@@ -313,8 +313,16 @@ public class payment extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int ticketCount = N1/100;
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        int ticketCount = N1 / 100;
+        String cardNumber = jTextField1.getText();
+        String cardHolderName = jTextField2.getText();
+        String cvv = jPasswordField1.getText();
+    
+        if (cardNumber.isEmpty() || cardHolderName.isEmpty() || cvv.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all card details.");
+            return; // Exit the method without processing the payment
+        }
         try {
             String query = "SELECT tickets FROM table3 WHERE movieName = ? AND theatre = ? AND date = ? AND shows = ?";
             preparedStatement = connection.prepareStatement(query);
@@ -322,24 +330,37 @@ public class payment extends javax.swing.JFrame {
             preparedStatement.setString(2, b);
             preparedStatement.setString(3, f);
             preparedStatement.setString(4, c);
-        
+    
             ResultSet resultSet = preparedStatement.executeQuery();
-        
+    
             if (resultSet.next()) {
                 int availableTickets = resultSet.getInt("tickets");
-        
+    
                 if (ticketCount <= availableTickets) {
                     // Perform booking and update available tickets in the database
                     int newAvailableTickets = availableTickets - ticketCount;
                     statement.executeUpdate("UPDATE table3 SET tickets = " + newAvailableTickets + " WHERE movieName = '" + a + "' AND theatre = '" + b + "' AND date = '" + f + "' AND shows = '" + c + "'");
                     JOptionPane.showMessageDialog(this, "Booking successful!");
-                        this.setVisible(false);
-                        new recepit1(a, b, c, e, N1, f).setVisible(true);
+    
+                    // Insert payment and card details into the payment_details table
+                    String insertPaymentQuery = "INSERT INTO payment_details (card_number, card_holder_name, cvv, ticket_count, movie_name, theater, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    preparedStatement = connection.prepareStatement(insertPaymentQuery);
+                    preparedStatement.setString(1, cardNumber);
+                    preparedStatement.setString(2, cardHolderName);
+                    preparedStatement.setString(3, cvv);
+                    preparedStatement.setInt(4, ticketCount);
+                    preparedStatement.setString(5, a);
+                    preparedStatement.setString(6, b);
+                    preparedStatement.setString(7, f);
+                    preparedStatement.setString(8, c);
+    
+                    preparedStatement.executeUpdate();
+    
+                    this.setVisible(false);
+                    new recepit1(a, b, c, e, N1, f).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "Not enough tickets available.");
                 }
-        
-               
             } else {
                 // Handle the case where no rows matched the query (no data found)
                 JOptionPane.showMessageDialog(this, "No matching record found.");
@@ -355,7 +376,7 @@ public class payment extends javax.swing.JFrame {
                 // Handle the exception or log it
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
     /**
      * @param args the command line arguments

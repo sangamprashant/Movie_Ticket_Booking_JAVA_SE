@@ -40,6 +40,7 @@ public class AdminPannel extends javax.swing.JFrame {
         DeleteMovie = new javax.swing.JButton();
         IdToDelete = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        ToReservation = new javax.swing.JButton();
         ToUsers = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -256,6 +257,21 @@ public class AdminPannel extends javax.swing.JFrame {
             }
         });
 
+        ToReservation.setBackground(new java.awt.Color(0, 102, 102));
+        ToReservation.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        ToReservation.setForeground(new java.awt.Color(255, 255, 255));
+        ToReservation.setText("BOOKINGS");
+        ToReservation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ToReservationMouseClicked(evt);
+            }
+        });
+        ToReservation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ToReservationActionPerformed(evt);
+            }
+        });
+
         ToUsers.setBackground(new java.awt.Color(0, 102, 102));
         ToUsers.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         ToUsers.setForeground(new java.awt.Color(255, 255, 255));
@@ -275,38 +291,41 @@ public class AdminPannel extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDesktopPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 787, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ToReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(ToUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jDesktopPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(6, 6, 6)
-                            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ToUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ToUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ToReservation, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -397,16 +416,27 @@ public class AdminPannel extends javax.swing.JFrame {
         AdminPannel.this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void ToUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToUsersActionPerformed
+    private void ToReservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToReservationActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ToUsersActionPerformed
+    }//GEN-LAST:event_ToReservationActionPerformed
+
+    private void ToReservationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ToReservationMouseClicked
+        // TODO add your handling code here:
+        AdminBookings ad = new AdminBookings();
+        ad.setVisible(true);
+        AdminPannel.this.setVisible(false);
+    }//GEN-LAST:event_ToReservationMouseClicked
 
     private void ToUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ToUsersMouseClicked
         // TODO add your handling code here:
-        AdminUsers ad = new AdminUsers();
-        ad.setVisible(true);
+        AdminUsers us = new AdminUsers();
+        us.setVisible(true);
         AdminPannel.this.setVisible(false);
     }//GEN-LAST:event_ToUsersMouseClicked
+
+    private void ToUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToUsersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ToUsersActionPerformed
 
     private boolean insertMovie(String movieName, String date, String theater, String shows, int tickets) {
     boolean inserted = false;
@@ -514,7 +544,7 @@ private void refreshTableData() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminPannel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminPannel.class.getName()).log(java.util.logging.Level.SEVERE,null, ex);
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(AdminPannel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
@@ -535,6 +565,7 @@ private void refreshTableData() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DeleteMovie;
     private javax.swing.JTextField IdToDelete;
+    private javax.swing.JButton ToReservation;
     private javax.swing.JButton ToUsers;
     private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;

@@ -1,5 +1,6 @@
  
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -287,7 +288,15 @@ public class cardselection extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-this.setVisible(false);       new payment(a,b,c,e,N1,f).setVisible(true); // TODO add your handling code here:
+// Check if at least one radio button is selected
+    if (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected() || jRadioButton4.isSelected()) {
+        // At least one radio button is selected, proceed with payment
+        this.setVisible(false);
+        new payment(a, b, c, e, N1, f).setVisible(true);
+    } else {
+        // No radio button is selected, show an error message
+        JOptionPane.showMessageDialog(this, "Please select a payment method.");
+    } // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
