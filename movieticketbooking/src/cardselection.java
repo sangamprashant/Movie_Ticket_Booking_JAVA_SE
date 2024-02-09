@@ -20,8 +20,6 @@ public class cardselection extends javax.swing.JFrame {
         ButtonGroup bg1= new ButtonGroup();
         bg1.add(jRadioButton1);
         bg1.add(jRadioButton2);
-        bg1.add(jRadioButton3);
-       bg1.add(jRadioButton4);
 
 
     }
@@ -57,8 +55,6 @@ public class cardselection extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -82,17 +78,6 @@ public class cardselection extends javax.swing.JFrame {
 
         jRadioButton2.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jRadioButton2.setText("Debit card");
-
-        jRadioButton3.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jRadioButton3.setText("NET BANKING");
-
-        jRadioButton4.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jRadioButton4.setText("PAYTM WALLET");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
-            }
-        });
 
         jButton1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jButton1.setText("Make Payment");
@@ -128,10 +113,8 @@ public class cardselection extends javax.swing.JFrame {
                 .addGap(82, 82, 82)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
+                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 355, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(89, 89, 89))
         );
@@ -142,11 +125,7 @@ public class cardselection extends javax.swing.JFrame {
                 .addComponent(jRadioButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jRadioButton3)
-                .addGap(18, 18, 18)
-                .addComponent(jRadioButton4)
-                .addGap(40, 40, 40))
+                .addGap(144, 144, 144))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -283,13 +262,9 @@ public class cardselection extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 // Check if at least one radio button is selected
-    if (jRadioButton1.isSelected() || jRadioButton2.isSelected() || jRadioButton3.isSelected() || jRadioButton4.isSelected()) {
+    if (jRadioButton1.isSelected() || jRadioButton2.isSelected()) {
         // At least one radio button is selected, proceed with payment
         this.setVisible(false);
         new payment(a, b, c, e, N1, f).setVisible(true);
@@ -363,7 +338,5 @@ this.setVisible(false);        new recepit().setVisible(true); // TODO add your 
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     // End of variables declaration//GEN-END:variables
 }

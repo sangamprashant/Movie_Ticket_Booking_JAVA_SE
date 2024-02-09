@@ -45,7 +45,7 @@ public class AdminBookings extends javax.swing.JFrame {
             String date = rs.getString("date");
             String time = rs.getString("time");
             
-            Object[] rowData = {id, cardNumber, cardHolderName, cvv, ticketCount, movieName, theater, date, time};
+            Object[] rowData = {id, cardNumber, cardHolderName, cvv, ticketCount,ticketCount*100, movieName, theater, date, time};
             tblModel.addRow(rowData);
         }
         
@@ -119,13 +119,10 @@ public class AdminBookings extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Card number", "Card holder name", "CVV", "Ticket count", "Movie name", "Theater", "Date", "Time"
+                "ID", "Card number", "Card holder name", "CVV", "Ticket count", "Price", "Movie name", "Theater", "Date", "Time"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

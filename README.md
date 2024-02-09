@@ -19,3 +19,25 @@ The primary objective of our online ticket booking system is to offer customers 
 - Front end: Java Swing
 - Database: MySQL Database
 - IDE: NetBeans 8.2 RC
+
+## Preview
+###### Main page
+![image](./images/1.png)
+###### User Login
+![image](./images/2.png)
+###### Movie selection 
+![image](./images/3.png)
+###### Booking details
+![image](./images/4.png)
+###### Conformation details
+![image](./images/5.png)
+###### Payment
+![image](./images/6.png)
+###### Receipt
+![image](./images/7.png)
+###### Admin Login
+![image](./images/8.png)
+###### Admin Home (a)
+![image](./images/9.png)
+###### Admin Home (b)
+![image](./images/10.png)

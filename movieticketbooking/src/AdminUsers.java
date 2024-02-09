@@ -376,19 +376,19 @@ public class AdminUsers extends javax.swing.JFrame {
         // Check if the movie ID is null or empty
         if (idToDelete == null || idToDelete.trim().isEmpty()) {
             // Show an error dialog if the input is empty
-            JOptionPane.showMessageDialog(this, "Please enter a valid movie ID.");
+            JOptionPane.showMessageDialog(this, "Please enter a valid user ID.");
         } else {
-            // Perform the movie deletion here (e.g., from your database)
+            // Perform the User deletion here (e.g., from your database)
             boolean deleted = deleteMovie(idToDelete);
 
             // Show a message based on the result
             if (deleted) {
-                // Movie deleted successfully
-                JOptionPane.showMessageDialog(this, "Movie with ID '" + idToDelete + "' has been deleted.");
+                // User deleted successfully
+                JOptionPane.showMessageDialog(this, "User with ID '" + idToDelete + "' has been deleted.");
                 refreshTableData();
             } else {
-                // Movie not found
-                JOptionPane.showMessageDialog(this, "Movie with ID '" + idToDelete + "' not found.");
+                // User not found
+                JOptionPane.showMessageDialog(this, "User with ID '" + idToDelete + "' not found.");
             }
         }
 
@@ -416,11 +416,11 @@ public class AdminUsers extends javax.swing.JFrame {
                 boolean inserted = insertUser(name, email, password, phone);
 
                 if (inserted) {
-                    JOptionPane.showMessageDialog(AdminUsers.this, "Movie added successfully.");
+                    JOptionPane.showMessageDialog(AdminUsers.this, "User added successfully.");
                     // Refresh the table data
                     refreshTableData();
                 } else {
-                    JOptionPane.showMessageDialog(AdminUsers.this, "Failed to add movie.");
+                    JOptionPane.showMessageDialog(AdminUsers.this, "Failed to add User.");
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(AdminUsers.this, "Please enter a valid number for tickets.");
@@ -445,7 +445,7 @@ public class AdminUsers extends javax.swing.JFrame {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/java_dbmovies", "root", "");
 
-        // Prepare the SQL statement to insert the movie data
+        // Prepare the SQL statement to insert the User data
        String query = "INSERT INTO register (name, email, password, phone) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = conn.prepareStatement(query);
                 preparedStatement.setString(1, name);
@@ -455,7 +455,7 @@ public class AdminUsers extends javax.swing.JFrame {
 
                 int rowsInserted = preparedStatement.executeUpdate();
 
-        // If rowsAffected is greater than 0, the movie was inserted successfully
+        // If rowsAffected is greater than 0, the User was inserted successfully
         if (rowsInserted > 0) {
             inserted = true;
         }

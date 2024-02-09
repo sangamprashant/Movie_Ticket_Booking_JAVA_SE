@@ -278,8 +278,8 @@ public class movie extends javax.swing.JFrame {
         try {
             int ticketCount = Integer.parseInt(ticketCountText);
             
-            if(ticketCount>10){
-                JOptionPane.showMessageDialog(this, "Ticket should not exceed above of 10.");
+            if(ticketCount>10||ticketCount<=0){
+                JOptionPane.showMessageDialog(this, "Ticket should be atleast 1 and not exceed above of 10.");
                 return;
             }
 
